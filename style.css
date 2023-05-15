@@ -89,6 +89,8 @@ body {
 
   display: grid;
   grid-template-rows: auto 1fr auto;
+
+  overflow-x: hidden;
 }
 
 /* make images easier to work with */
@@ -139,6 +141,10 @@ select {
   display: block;
 }
 
+.d-none {
+  display: none;
+}
+
 .flow > *:where(:not(:first-child)) {
   margin-top: var(--flow-space, 1rem);
 }
@@ -181,8 +187,6 @@ select {
     align-items: end;
   }
 }
-
-
 
 .sr-only {
 position: absolute; 
@@ -282,12 +286,24 @@ border: 0;
   transform: scale(1.5);
 }
 
+/* primary-header */
+
+.logo {
+  margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
+}
+
+.primary-header {
+  justify-content: space-between;
+  align-items: center;
+}
+
 .primary-navigation {
-  --gap: 8rem;
   --underline-gap: 2rem;
   list-style: none;
   padding: 0;
   margin: 0;
+  background-color: hsl( var(--clr-white) / .1);
+  backdrop-filter: blur(1rem);
 }
 
 .primary-navigation a {
@@ -297,6 +313,10 @@ border: 0;
 .primary-navigation a > span {
   font-weight: 700;
   margin-right: .5em;
+}
+
+.mobile-nav-toggle {
+  display: none;
 }
 
 .underline-indicators > * {
@@ -315,6 +335,60 @@ border: 0;
 .underline-indicators > [aria-selected="true"] {
   color: hsl( var(--clr-white) / 1);
   border-color: hsl( var(--clr-white) / 1); 
+}
+
+@media (max-width: 35rem) {
+  .primary-navigation {
+    --underline-gap: .5rem;
+    position: fixed;
+    z-index: 1000;
+    inset: 0 0 0 30%;
+    list-style: none;
+    padding: min(20rem, 15vh) 2rem;
+    margin: 0;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: 500ms ease-in-out;
+  }
+
+  .primary-navigation[data-visible="true"] {
+    transform: translateX(0);
+  }
+
+  .primary-navigation.underline-indicators > .active,
+  .primary-navigation.underline-indicators > [aria-selected="true"] {
+    border: 0;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+    position: absolute;
+    z-index: 1001;
+    top: 2rem;
+    right: 1rem;
+    background: transparent;
+    background-image: url(assets/shared/icon-hamburger.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1.5rem;
+    aspect-ratio: 1;
+    border: 0;
+  }
+
+  .mobile-nav-toggle[aria-expanded="true"] {
+    background-image: url(assets/shared/icon-close.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .mobile-nav-toggle:focus-visible {
+    outline: 5px solid hsl( var(--clr-white) / .25);
+    outline-offset: 5px;
+  }
+}
+
+@media (min-width: 35rem) and (max-width: 45rem) {
+  
 }
 
 .tab-list {
@@ -366,3 +440,4 @@ body {
     background-image: url(assets/home/background-home-desktop.jpg);
   }
 }
+
