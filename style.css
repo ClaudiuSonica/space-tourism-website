@@ -810,7 +810,7 @@ body {
     color: hsl(var(--clr-light));
   }
 
-  .grid-container--technology h1 {
+  .grid-container--technology h2 {
     font-size: var(--fs-400);
     color: hsl(var(--clr-light));
   }
